@@ -103,4 +103,7 @@ Node<K> * List<K>::find(const K & key) {
 	return x;
 }
 
+//tests
+void test_list();
+
 #endif
