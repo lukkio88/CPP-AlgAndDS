@@ -3,10 +3,14 @@
 #define __GRAPH_H
 #include <list.h>
 
-struct Node {
-	int key;
-	int color;
+class Node {
+public:
+	Node();
+	void addAdjacent(Node * u);
+	int degree() const;
+private:
 	List<Node*> adjacent;
+	int color;
 };
 
 class Graph {
