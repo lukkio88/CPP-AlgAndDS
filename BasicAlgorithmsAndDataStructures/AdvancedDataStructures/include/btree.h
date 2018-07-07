@@ -13,6 +13,7 @@ struct BTreeNode {
 	}
 
 	//insertion helpers
+	void insert(const int & newKey);
 	void splitChild(const int & childIdx);
 	void insertNonEmpty(const int & key);
 
@@ -21,14 +22,14 @@ struct BTreeNode {
 	bool remove(const int & k);
 	void removeFromLeaf(const int & kIdx);
 	void removeFromInternal(const int & kIdx);
-	void findPrev(const int & kIdx);
-	void findSucc(const int & kIdx);
+	BTreeNode<B> * findPrev(const int & kIdx, int & idxPrev);
+	BTreeNode<B> * findSucc(const int & kIdx, int & idxNext);
 	void borrowFromLeft(const int & childIdx);
 	void borrowFromRight(const int & childIdx);
 	void merge(const int & childIdx);
 
 	int key[2 * B - 1];
-	BTreeNode * child[2 * B];
+	BTreeNode<B> * child[2 * B];
 	int n;
 	bool leaf;
 };
@@ -36,7 +37,10 @@ struct BTreeNode {
 template<int B>
 class BTree {
 public:
-private:
+	BTree();
+	~BTree();
+	void insertKey(const int & newKey);
+	void deleteKey(const int & key);
 private:
 	BTreeNode<B> * root;
 };
