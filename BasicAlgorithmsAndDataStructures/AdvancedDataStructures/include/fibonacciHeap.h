@@ -5,6 +5,11 @@ struct FibNode {
 	bool marked;
 	int degree;
 	FibNode * next, *prev, *parent, *child;
+
+	FibNode * insertNode(FibNode * y);
+	FibNode * joinList(FibNode * y);
+	FibNode * remove();
+	void initParents();
 };
 
 class FibonacciHeap {

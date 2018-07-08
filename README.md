@@ -1,2 +1,2 @@
 # CPP-AlgAndDS
-C++ libraries collection
+C++ Collection of basic algorithms and data structures.
