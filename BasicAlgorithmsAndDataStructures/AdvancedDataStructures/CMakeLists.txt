@@ -3,8 +3,8 @@ project(AdvancedDataStructures)
 
 set( CMAKE_CXX_STANDARD 11 )
 
-set( SRC_FILES main.cpp btree.cpp)
-set( HEADER_FILES btree.h)
+set( SRC_FILES main.cpp btree.cpp fibonacciHeap.cpp)
+set( HEADER_FILES btree.h fibonacciHeap.h)
 
 #Cuda compilation
 set( CMAKE_CXX_FLAGS_DEBUG "-Wall")
