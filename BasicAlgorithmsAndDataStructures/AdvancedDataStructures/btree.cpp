@@ -31,7 +31,7 @@ void BTreeNode<B>::splitChild(const int & childIdx) {
 }
 
 template<int B>
-void BTreeNode<B>::insertNonEmpty(const int & newKey) {
+void BTreeNode<B>::insertNonFull(const int & newKey) {
 	int i = 0;
 	while (newKey >= key[i] && i < x->n)
 		++i;
@@ -48,11 +48,11 @@ void BTreeNode<B>::insertNonEmpty(const int & newKey) {
 		if (newKey >= key[i])
 			++i;
 	}
-	insertNonEmpty(child[i]);
+	insertNonFull(child[i]);
 }
 
 template<int B>
-void BTreeNode<B>::insertNonEmpty(const int & newKey) {
+void BTreeNode<B>::insert(const int & newKey) {
 	BTreeNode<B> * r = this;
 	if (r->n == 2 * B - 1) {
 		s = new BTreeNode<B>();
@@ -60,10 +60,10 @@ void BTreeNode<B>::insertNonEmpty(const int & newKey) {
 		s->leaf = false;
 		s->child[0] = r;
 		s->splitChild(0);
-		s->insertNonEmpty(newKey);
+		s->insertNonFull(newKey);
 	}
 	else
-		r->insertNonEmpty(newKey);
+		r->insertNonFull(newKey);
 }
 
 //Deletion

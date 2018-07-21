@@ -3,11 +3,14 @@ project(AdvancedDataStructures)
 
 set( CMAKE_CXX_STANDARD 11 )
 
-set( SRC_FILES main.cpp btree.cpp fibonacciHeap.cpp)
+include_directories(./)
+
+set( SRC_FILES btree.cpp fibonacciHeap.cpp)
 set( HEADER_FILES btree.h fibonacciHeap.h)
 
-#Cuda compilation
-set( CMAKE_CXX_FLAGS_DEBUG "-Wall")
-set( CMAKE_CXX_FLAGS_DEBUG "-Wall -O3")
-add_executable(AdvancedDataStructuresDemo ${SRC_FILES} ${HEADER_FILES})
+if(WIN32)
+	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
+endif()
 
+add_library(advanced-data-structures SHARED ${SRC_FILES} ${HEADER_FILES})
+set_target_properties(advanced-data-structures PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

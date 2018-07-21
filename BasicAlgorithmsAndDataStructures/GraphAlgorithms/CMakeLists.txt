@@ -3,10 +3,9 @@ project(GraphAlgorithms)
 
 set( CMAKE_CXX_STANDARD 11 )
 
-set( SRC_FILES main.cpp graph.cpp)
+include_directories(./)
+
+#set( SRC_FILES graph.cpp)
 set( HEADER_FILES graph.h)
 
-#Cuda compilation
-set( CMAKE_CXX_FLAGS_DEBUG "-Wall")
-set( CMAKE_CXX_FLAGS_DEBUG "-Wall -O3")
-add_executable(ElementaryDataStructureDemo ${SRC_FILES} ${HEADER_FILES})
+#add_library(graph-algorithms SHARED ${HEADER_FILES})

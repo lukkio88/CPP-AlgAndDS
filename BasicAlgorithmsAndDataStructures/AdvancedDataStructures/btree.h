@@ -15,7 +15,7 @@ struct BTreeNode {
 	//insertion helpers
 	void insert(const int & newKey);
 	void splitChild(const int & childIdx);
-	void insertNonEmpty(const int & key);
+	void insertNonFull(const int & key);
 
 	//deletion helpers
 	int findKey(const int & k);

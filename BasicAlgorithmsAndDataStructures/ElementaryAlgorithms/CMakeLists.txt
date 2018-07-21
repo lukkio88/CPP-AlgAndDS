@@ -3,11 +3,10 @@ project(ElementaryAlgorithms)
 
 set( CMAKE_CXX_STANDARD 11 )
 
-set( SRC_FILES main.cpp commons.cpp heapsort.cpp quicksort.cpp)
+include_directories(./)
+
+set( SRC_FILES commons.cpp heapsort.cpp quicksort.cpp)
 set( HEADER_FILES commons.h heapsort.h quicksort.h)
 
-#Cuda compilation
-set( CMAKE_CXX_FLAGS_DEBUG "-Wall")
-set( CMAKE_CXX_FLAGS_DEBUG "-Wall -O3")
-add_executable(ElementaryAlgorithmsDemo ${SRC_FILES} ${HEADER_FILES})
-
+add_library(elementary-algorithms SHARED ${SRC_FILES} ${HEADER_FILES})
+set_target_properties(elementary-algorithms PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
