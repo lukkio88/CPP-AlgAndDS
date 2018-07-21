@@ -9,6 +9,7 @@ add_subdirectory(./AdvancedDataStructures)
 add_subdirectory(./GraphAlgorithms)
 
 set(INCLUDE_FOLDERS 
+	./
 	./ElementaryAlgorithms 
 	./ElementaryDataStructures 
 	./AdvancedDataStructures 
@@ -16,9 +17,10 @@ set(INCLUDE_FOLDERS
 
 include_directories(${INCLUDE_FOLDERS})
 
-set(SRC_FILES main.cpp)
+set(HEADER_FILES alg-and-ds.h)
+set(SRC_FILES main.cpp alg-and-ds.cpp)
 
-add_executable(alg-and-ds ${SRC_FILES})
+add_executable(alg-and-ds ${SRC_FILES} ${HEADER_FILES})
 target_link_libraries(alg-and-ds 
 	elementary-algorithms
 	elementary-data-structures

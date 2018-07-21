@@ -15,7 +15,7 @@ public:
 	void remove(TreeNode * x);
 	TreeNode * search(const int & k);
 
-private:
+protected:
 
 	TreeNode * maximum(TreeNode * x);
 	TreeNode * minimum(TreeNode * x);

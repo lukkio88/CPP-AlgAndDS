@@ -19,7 +19,7 @@ public:
 	void remove(RBTreeNode* x);
 	RBTreeNode * search(const int & k);
 
-private:
+protected:
 
 	RBTreeNode * minimum(RBTreeNode * x);
 	RBTreeNode * maximum(RBTreeNode * x);
