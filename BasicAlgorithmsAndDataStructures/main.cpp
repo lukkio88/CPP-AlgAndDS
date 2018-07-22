@@ -5,8 +5,7 @@ int main(int argc, char **argv) {
 		printf("Error...\n");
 	}
 	else {
-		test_list(argv[1]);
+		test_binary_search_tree(argv[1]);
 	}
 	return 1;
-
 }
