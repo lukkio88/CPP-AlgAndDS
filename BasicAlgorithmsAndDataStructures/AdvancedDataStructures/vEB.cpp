@@ -25,20 +25,20 @@ void swap(int & a, int & b) {
 	b = tmp;
 }
 
-bool isMember(vEBNode * V, const int & x) {
-	if (V->u == 2) {
-		if (x == V->min || x == V->max)
-			return true;
-		else return false;
+bool isMember(vEBNode * V, int x) {
+	int u = V->u;
+	while (u != 2) {
+		V = V->cluster[high(x, u)];
+		x = low(x, u);
 	}
-	else
-		return isMember(V->cluster[high(x, V->u)], low(x, V->u));
+	if (x == V->min || x == V->max)
+		return true;
 }
 
-int successor(vEBNode * V, const int & x) {
-	int & min = V->min;
-	int & max = V->max;
-	int & u = V->u;
+int successor(vEBNode * V,const int & x) {
+	int min = V->min;
+	int max = V->max;
+	int u = V->u;
 	if (u == 2) {
 		if (x == 0 && V->max != -1)
 			return 1;

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef __FIBONACCI_HEAP_H
+#define __FIBONACCI_HEAP_H
 
 struct FibNode {
 	int key;
@@ -25,3 +27,5 @@ private:
 	FibNode * min;
 	int n;
 };
+
+#endif

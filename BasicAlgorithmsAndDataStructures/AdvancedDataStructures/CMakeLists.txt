@@ -5,8 +5,8 @@ set( CMAKE_CXX_STANDARD 11 )
 
 include_directories(./)
 
-set( SRC_FILES vEB.cpp btree.cpp fibonacciHeap.cpp)
-set( HEADER_FILES vEB.h btree.h fibonacciHeap.h)
+set( SRC_FILES union_find.cpp vEB.cpp btree.cpp fibonacciHeap.cpp)
+set( HEADER_FILES union_find.h vEB.h btree.h fibonacciHeap.h)
 
 if(WIN32)
 	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
