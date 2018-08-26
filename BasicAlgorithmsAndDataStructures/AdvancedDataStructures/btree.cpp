@@ -33,22 +33,26 @@ void BTreeNode<B>::splitChild(const int & childIdx) {
 template<int B>
 void BTreeNode<B>::insertNonFull(const int & newKey) {
 	int i = 0;
-	while (newKey >= key[i] && i < x->n)
-		++i;
-
-	if (leaf) {
-		for (auto j = x->n; j >= i + 1; --j)
-			key[j] = key[j - 1];
-		key[i] = newKey;
-		return;
-	}
-
-	if (child[i]->n == 2*B - 1) {
-		splitChild(i);
-		if (newKey >= key[i])
+	bool inserted = false;
+	x = this;
+	while (true) {
+		while (newKey >= x->key[i] && i < x->n)
 			++i;
+
+		if (x->leaf) {
+			for (auto j = x->n; j >= i + 1; --j)
+				x->key[j] = x->key[j - 1];
+			x->key[i] = newKey;
+			break;
+		}
+
+		if (x->child[i]->n == 2 * B - 1) {
+			x->splitChild(i);
+			if (newKey >= x->key[i])
+				++i;
+		}
+		x = x->child[i];
 	}
-	insertNonFull(child[i]);
 }
 
 template<int B>

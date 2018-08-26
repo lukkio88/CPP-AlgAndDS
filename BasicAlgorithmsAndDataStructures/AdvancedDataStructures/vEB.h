@@ -30,7 +30,7 @@ struct vEBNode {
 	vEBNode **cluster;
 };
 
-bool isMember(vEBNode * V, const int & x);
+bool isMember(vEBNode * V, int x);
 int successor(vEBNode * V, const int & x);
 int predecessor(vEBNode * V, const int & x);
 void insert(vEBNode * V, const int & x);
