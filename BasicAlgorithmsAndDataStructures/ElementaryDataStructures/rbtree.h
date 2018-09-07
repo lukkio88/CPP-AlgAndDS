@@ -4,35 +4,39 @@
 constexpr int BLACK = 0;
 constexpr int RED = 1;
 
+template<typename K>
 struct RBTreeNode {
 	int key;
-	RBTreeNode * left, *right, *parent;
+	RBTreeNode<K> * left, *right, *parent;
 	int color;
 };
 
+template<typename K>
 class RBTree {
 public:
 	RBTree();
 	~RBTree();
 
-	void insert(RBTreeNode* x);
-	void remove(RBTreeNode* x);
-	RBTreeNode * search(const int & k);
+	void insert(RBTreeNode<K>* x);
+	void remove(RBTreeNode<K>* x);
+	RBTreeNode<K> * search(const int & k);
 
 protected:
 
-	RBTreeNode * minimum(RBTreeNode * x);
-	RBTreeNode * maximum(RBTreeNode * x);
-	void transplant(RBTreeNode * x, RBTreeNode * y);
-	RBTreeNode * leftRotate(RBTreeNode *x);
-	RBTreeNode * rightRotate(RBTreeNode *x);
+	RBTreeNode<K> * minimum(RBTreeNode<K> * x);
+	RBTreeNode<K> * maximum(RBTreeNode<K> * x);
+	void transplant(RBTreeNode<K> * x, RBTreeNode<K> * y);
+	RBTreeNode<K> * leftRotate(RBTreeNode<K> *x);
+	RBTreeNode<K> * rightRotate(RBTreeNode<K> *x);
 
-	void insertFixup(RBTreeNode * x);
-	void removeFixup(RBTreeNode * x);
+	void insertFixup(RBTreeNode<K> * x);
+	void removeFixup(RBTreeNode<K> * x);
 
 private:
-	RBTreeNode * nil;
-	RBTreeNode * root;
+	RBTreeNode<K> * nil;
+	RBTreeNode<K> * root;
 };
+
+#include "rbtree.tcc"
 
 #endif

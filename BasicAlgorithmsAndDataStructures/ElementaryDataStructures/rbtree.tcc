@@ -1,19 +1,20 @@
-#include <rbtree.h>
-
-RBTree::RBTree()
+template<typename K>
+RBTree<K>::RBTree()
 {
-	nil = new RBTreeNode();
+	nil = new RBTreeNode<K>();
 	nil->left = nil->right = nil->parent = nil;
 	root = nil;
 	nil->color = BLACK;
 }
 
-RBTree::~RBTree()
+template<typename K>
+RBTree<K>::~RBTree()
 {
-	;
+	delete nil;
 }
 
-void RBTree::insert(RBTreeNode * x)
+template<typename K>
+void RBTree<K>::insert(RBTreeNode<K> * x)
 {
 	if (root == nil) {
 		root = x;
@@ -22,7 +23,7 @@ void RBTree::insert(RBTreeNode * x)
 		x->left = x->right = nil;
 	}
 	else {
-		RBTreeNode *y = nil, *z = root;
+		RBTreeNode<K> *y = nil, *z = root;
 		while (z != nil) {
 			y = z;
 			if (x->key < z->key)
@@ -41,9 +42,10 @@ void RBTree::insert(RBTreeNode * x)
 	}
 }
 
-void RBTree::remove(RBTreeNode * x)
+template<typename K>
+void RBTree<K>::remove(RBTreeNode<K> * x)
 {
-	RBTreeNode * y = x, *z;
+	RBTreeNode<K> * y = x, *z;
 	int y_original_color = y->color;
 	if (x->left == nil) {
 		z = x->right;
@@ -71,9 +73,10 @@ void RBTree::remove(RBTreeNode * x)
 		removeFixup(z);
 }
 
-RBTreeNode * RBTree::search(const int & k)
+template<typename K>
+RBTreeNode<K> * RBTree<K>::search(const int & k)
 {
-	RBTreeNode * x = root;
+	RBTreeNode<K> * x = root;
 	while (x != nil) {
 		if (k < x->key)
 			x = x->left;
@@ -85,21 +88,24 @@ RBTreeNode * RBTree::search(const int & k)
 	return nullptr;
 }
 
-RBTreeNode * RBTree::minimum(RBTreeNode * x)
+template<typename K>
+RBTreeNode<K> * RBTree<K>::minimum(RBTreeNode<K> * x)
 {
 	while (x->left != nil)
 		x = x->left;
 	return x;
 }
 
-RBTreeNode * RBTree::maximum(RBTreeNode * x)
+template<typename K>
+RBTreeNode<K> * RBTree<K>::maximum(RBTreeNode<K> * x)
 {
 	while (x->right != nil)
 		x = x->right;
 	return x;
 }
 
-void RBTree::transplant(RBTreeNode * x, RBTreeNode * y)
+template<typename K>
+void RBTree<K>::transplant(RBTreeNode<K> * x, RBTreeNode<K> * y)
 {
 	if (x == root)
 		root = y;
@@ -110,9 +116,10 @@ void RBTree::transplant(RBTreeNode * x, RBTreeNode * y)
 	y->parent = x->parent;
 }
 
-RBTreeNode * RBTree::leftRotate(RBTreeNode * x)
+template<typename K>
+RBTreeNode<K> * RBTree<K>::leftRotate(RBTreeNode<K> * x)
 {
-	RBTreeNode * y = x->right;
+	RBTreeNode<K> * y = x->right;
 	transplant(x, y);
 	y->left->parent = x;
 	x->right = y->left;
@@ -120,9 +127,10 @@ RBTreeNode * RBTree::leftRotate(RBTreeNode * x)
 	return y;
 }
 
-RBTreeNode * RBTree::rightRotate(RBTreeNode * x)
+template<typename K>
+RBTreeNode<K> * RBTree<K>::rightRotate(RBTreeNode<K> * x)
 {
-	RBTreeNode * y = x->left;
+	RBTreeNode<K> * y = x->left;
 	transplant(x, y);
 	y->right->parent = x;
 	x->left = y->right;
@@ -130,7 +138,8 @@ RBTreeNode * RBTree::rightRotate(RBTreeNode * x)
 	return y;
 }
 
-void RBTree::insertFixup(RBTreeNode * x)
+template<typename K>
+void RBTree<K>::insertFixup(RBTreeNode<K> * x)
 {
 	while (x->parent->color == RED) {
 		if (x->parent == x->parent->parent->left) {
@@ -172,7 +181,8 @@ void RBTree::insertFixup(RBTreeNode * x)
 	}
 }
 
-void RBTree::removeFixup(RBTreeNode * x)
+template<typename K>
+void RBTree<K>::removeFixup(RBTreeNode<K> * x)
 {
 	while (x != root || x->color == BLACK) {
 		RBTreeNode * w;

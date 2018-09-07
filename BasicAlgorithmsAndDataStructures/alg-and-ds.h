@@ -2,7 +2,7 @@
 #ifndef __ALG_AND_DS_H
 #define __ALG_AND_DS_H
 #include <list.h>
-#include <bstree.h>
+//#include <bstree.h>
 #include <iostream>
 #include <sstream>
 #include <fstream>

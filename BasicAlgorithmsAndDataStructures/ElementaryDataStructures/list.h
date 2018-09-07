@@ -1,22 +1,26 @@
 #ifndef __LIST_H
 #define __LIST_H
 
+template<typename V>
 struct Node {
-	int key;
-	Node *prev, *next;
+	V val;
+	Node<V> *prev, *next;
 };
 
+template<typename V>
 class List {
 public:
 	List();
 	~List();
-	void insert(Node * x);
-	void remove(Node * x);
-	Node * search(const int & k);
+	void insert(Node<V> * x);
+	void remove(Node<V> * x);
+	Node<V> * search(const V & k);
 	int getSize() const;
 private:
-	Node *nil;
+	Node<V> *nil;
 	int size;
 };
+
+#include "list.tcc"
 
 #endif
