@@ -1,4 +1,36 @@
 template<typename K>
+int RBTreeNode<K>::black_height(RBTreeNode<K> *x, RBTreeNode<K> *nil) {
+	if (x == nil) {
+		return 1;
+	}
+
+	int bh_left = black_height(x->left);
+	int bh_right = black_height(x->right);
+	if(bh_left == -1 || bh_right == -1 || bh_left != bh_right)
+		return -1;
+	else {
+		if (x->color == BLACK)
+			return 1 + bh_left;
+		else
+			return bh_left;
+	}
+}
+
+template<typename K>
+bool RBTreeNode<K>::check_simple_path(RBTreeNode<K> *x, RBTreeNode<K> *nil) {
+	if (x == nil)
+		return true;
+	else if(check_simple_path(x->left,nil) && check_simple_path(x->right,nil)) {
+		if (x->color == RED && x->left->color == BLACK && x->right->color == BLACK)
+			return true;
+		return false;
+	}
+	else {
+		return false;
+	}
+}
+
+template<typename K>
 RBTree<K>::RBTree()
 {
 	nil = new RBTreeNode<K>();

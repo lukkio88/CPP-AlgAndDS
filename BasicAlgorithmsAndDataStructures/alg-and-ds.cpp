@@ -1,7 +1,40 @@
 #include <alg-and-ds.h>
 
-int test_list(char *filename) {
-	int n_test;
+using std::ifstream;
+using std::stringstream;
+using std::string;
+
+int test_list(const string& filename) {
+	ifstream ifs(filename);
+	stringstream ss;
+	string line;
+	List<int> l;
+	Node<int> *curr_node;
+
+	int command;
+	int n_el;
+	int curr_el;
+
+	while (std::getline(ifs, line)) {
+		ss = stringstream(line);
+		ss >> command;
+		if (command == INSERT) {
+			ss >> n_el;
+			while (n_el > 0) {
+				ss >> curr_el;
+				curr_node = new Node<int>();
+				curr_node->val = curr_el;
+				l.insert(curr_node);
+				n_el--;
+			}
+		}
+		else if (command == SEARCH) {
+
+		}
+		else (command == DELETE) {
+
+		}
+	}
 }
 
 /*

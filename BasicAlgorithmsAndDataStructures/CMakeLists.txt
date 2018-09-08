@@ -6,7 +6,7 @@ set( CMAKE_CXX_STANDARD 11 )
 #add_subdirectory(./ElementaryAlgorithms)
 add_subdirectory(./ElementaryDataStructures)
 #add_subdirectory(./AdvancedDataStructures)
-#add_subdirectory(./GraphAlgorithms)
+add_subdirectory(./GraphAlgorithms)
 
 #set(INCLUDE_FOLDERS 
 #	./
@@ -17,12 +17,12 @@ add_subdirectory(./ElementaryDataStructures)
 
 set(INCLUDE_FOLDERS ./ ./ElementaryDataStructures)
 
-set(HEADER_FILES alg-and-ds.h)
-set(SRC_FILES main.cpp alg-and-ds.cpp)
+file(GLOB_RECURSE HEADER_FILES "./*.h")
+file(GLOB_RECURSE SRC_FILES "./*.cpp")
 
 add_executable(alg-and-ds ${SRC_FILES} ${HEADER_FILES})
 target_include_directories(alg-and-ds PUBLIC ${INCLUDE_FOLDERS})
-target_link_libraries(alg-and-ds elementary-data-structures)
+target_link_libraries(alg-and-ds elementary-data-structures graph-algorithms)
 
 #target_link_libraries(alg-and-ds
 #	graph-algorithms

@@ -12,6 +12,12 @@ struct RBTreeNode {
 };
 
 template<typename K>
+int RBTreeNode<K>::black_height(RBTreeNode<K> *x);
+
+template<typename K>
+bool RBTreeNode<K>::check_simple_path(RBTreeNode<K> *x);
+
+template<typename K>
 class RBTree {
 public:
 	RBTree();

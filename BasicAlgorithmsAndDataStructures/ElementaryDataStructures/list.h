@@ -21,6 +21,16 @@ private:
 	int size;
 };
 
+template<typename V>
+class ListValidator {
+public:
+	ListValidator(List<V>* x);
+	friend bool noLoopForward();
+	friend bool noLoopBackward();
+private:
+	List<V> *l;
+};
+
 #include "list.tcc"
 
 #endif

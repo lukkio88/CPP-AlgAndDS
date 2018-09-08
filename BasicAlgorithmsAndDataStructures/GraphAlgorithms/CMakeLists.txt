@@ -6,8 +6,8 @@ set( CMAKE_CXX_STANDARD 11 )
 include_directories(./)
 include_directories(../ElementaryDataStructures)
 
-set( HEADER_FILES graph.h)
-set( SRC_FILES graph.cpp)
+file(GLOB_RECURSE HEADER_FILES "./*.h")
+file(GLOB_RECURSE SRC_FILES "./*.cpp")
 
 if(WIN32)
 	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
