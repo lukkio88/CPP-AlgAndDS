@@ -13,10 +13,8 @@ public:
 	void insert(Node * x);
 	void remove(Node * x);
 	Node * search(const int & k);
-	int getSize() const;
 private:
 	Node *nil;
-	int size;
 };
 
 #endif

@@ -3,10 +3,17 @@
 List::List() {
 	nil = new Node();
 	nil->next = nil->prev = nil;
-	size = 0;
 };
+
 List::~List() { 
-	; 
+	Node * x = nil->next;
+	Node * y;
+	while (x != nil) {
+		y = x->next;
+		remove(x);
+		delete x;
+		x = y;
+	}
 }
 
 void List::insert(Node * x) {
@@ -14,13 +21,11 @@ void List::insert(Node * x) {
 	x->next = nil->next;
 	nil->next->prev = x;
 	nil->next = x;
-	++size;
 }
 
 void List::remove(Node * x) {
 	x->prev->next = x->next;
 	x->next->prev = x->prev;
-	--size;
 }
 
 Node * List::search(const int & k) {
@@ -30,8 +35,4 @@ Node * List::search(const int & k) {
 	if (x == nil)
 		return nullptr;
 	return x;
-}
-
-int List::getSize() const {
-	return size;
 }
