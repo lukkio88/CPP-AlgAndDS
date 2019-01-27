@@ -30,7 +30,7 @@ private:
 	void insertFixup(RBTreeNode * x);
 	void removeFixup(RBTreeNode * x);
 
-private:
+public:
 	RBTreeNode * nil;
 	RBTreeNode * root;
 };

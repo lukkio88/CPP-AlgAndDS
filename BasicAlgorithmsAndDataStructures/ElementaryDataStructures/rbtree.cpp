@@ -114,6 +114,7 @@ RBTreeNode * RBTree::leftRotate(RBTreeNode * x)
 {
 	RBTreeNode * y = x->right;
 	transplant(x, y);
+	x->parent = y;
 	y->left->parent = x;
 	x->right = y->left;
 	y->left = x;
@@ -124,6 +125,7 @@ RBTreeNode * RBTree::rightRotate(RBTreeNode * x)
 {
 	RBTreeNode * y = x->left;
 	transplant(x, y);
+	x->parent = y;
 	y->right->parent = x;
 	x->left = y->right;
 	y->right = x;
@@ -170,11 +172,12 @@ void RBTree::insertFixup(RBTreeNode * x)
 			}
 		}
 	}
+	root->color = BLACK;
 }
 
 void RBTree::removeFixup(RBTreeNode * x)
 {
-	while (x != root || x->color == BLACK) {
+	while (x != root && x->color == BLACK) {
 		RBTreeNode * w;
 		if (x == x->parent->left) {
 			w = x->parent->right;
