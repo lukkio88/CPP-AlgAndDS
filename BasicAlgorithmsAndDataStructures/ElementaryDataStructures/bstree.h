@@ -21,7 +21,7 @@ private:
 	TreeNode * minimum(TreeNode * x);
 	void transplant(TreeNode * x, TreeNode *y);
 
-private:
+public:
 	TreeNode * nil;
 	TreeNode * root;
 };

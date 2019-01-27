@@ -13,7 +13,7 @@ TreeNode * BinarySearchTree::minimum(TreeNode * x) {
 }
 
 void BinarySearchTree::transplant(TreeNode * x, TreeNode *y) {
-	if (x->parent == root)
+	if (x->parent == nil)
 		root = y;
 	if (x == x->parent->left)
 		x->parent->left = y;
@@ -58,7 +58,7 @@ void BinarySearchTree::remove(TreeNode * x) {
 	if (x->left == nil)
 		transplant(x, x->right);
 	else if (x->right == nil)
-		transplant(x, x->right);
+		transplant(x, x->left);
 	else {
 		TreeNode * y = minimum(x->right);
 		if (y->parent != x) {
