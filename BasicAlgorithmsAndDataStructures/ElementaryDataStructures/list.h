@@ -13,7 +13,8 @@ public:
 	void insert(Node * x);
 	void remove(Node * x);
 	Node * search(const int & k);
-private:
+
+public:
 	Node *nil;
 };
 

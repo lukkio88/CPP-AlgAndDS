@@ -1,0 +1,10 @@
+create_list
+insert 5 
+insert 6 
+insert 7 
+insert 8 
+insert 9 
+insert 10 
+search 5
+remove
+search 7

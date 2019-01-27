@@ -14,6 +14,7 @@ List::~List() {
 		delete x;
 		x = y;
 	}
+	delete nil;
 }
 
 void List::insert(Node * x) {
