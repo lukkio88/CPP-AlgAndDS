@@ -28,8 +28,9 @@ void UnitTest::runTest()
 		ss >> command;
 
 		if (command == "insert") {
-			ss >> val;
-			perform_insert(val);
+			while (ss >> val) {
+				perform_insert(val);
+			}
 			print_current_state();
 		}
 		else if (command == "remove") {
