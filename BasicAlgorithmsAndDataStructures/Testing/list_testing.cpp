@@ -20,9 +20,8 @@ void print(const List& l) {
 
 }
 
-ListTesting::ListTesting(string test_filename)
+ListTesting::ListTesting(string test_filename):UnitTest(test_filename)
 {
-	filename = test_filename;
 	mListTested = new List();
 }
 
@@ -31,37 +30,8 @@ ListTesting::~ListTesting()
 	delete mListTested;
 }
 
-void ListTesting::runTest()
-{
-	string curr_line, command;
-	stringstream ss;
-	int val;
-	ifstream ifs(filename);
-	while (getline(ifs, curr_line)) {
-		ss = stringstream(curr_line);
-		ss >> command;
-		
-		if (command == "insert") {
-			ss >> val;
-			perform_insert(val);
-			print(*mListTested);
-		}
-		else if (command == "remove") {
-			perform_remove();
-			print(*mListTested);
-		}
-		else if (command == "search") {
-			ss >> val;
-			perform_search(val);
-			print(*mListTested);
-		}
-		else {
-			cout << "Command not valid" << endl;
-		}
-	}
-	cout << "List final state : " << endl;
+void ListTesting::print_current_state() {
 	print(*mListTested);
-	ifs.close();
 }
 
 void ListTesting::perform_insert(int val)

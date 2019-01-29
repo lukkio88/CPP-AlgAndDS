@@ -32,7 +32,7 @@ void print(const RBTree& l, const int stack_size) {
 	std::cout << "}" << std::endl;
 }
 
-RBTreeTesting::RBTreeTesting(string test_filename, const int stack_size) :mStackSize(stack_size), filename(test_filename), mRBTreeTested(new RBTree())
+RBTreeTesting::RBTreeTesting(string test_filename, const int stack_size) :UnitTest(test_filename), mStackSize(stack_size), mRBTreeTested(new RBTree())
 {
 
 }
@@ -42,37 +42,8 @@ RBTreeTesting::~RBTreeTesting()
 	delete mRBTreeTested;
 }
 
-void RBTreeTesting::runTest()
-{
-	string curr_line, command;
-	stringstream ss;
-	int val;
-	ifstream ifs(filename);
-	while (getline(ifs, curr_line)) {
-		ss = stringstream(curr_line);
-		ss >> command;
-
-		if (command == "insert") {
-			ss >> val;
-			perform_insert(val);
-			print(*mRBTreeTested,mStackSize);
-		}
-		else if (command == "remove") {
-			perform_remove();
-			print(*mRBTreeTested,mStackSize);
-		}
-		else if (command == "search") {
-			ss >> val;
-			perform_search(val);
-			print(*mRBTreeTested,mStackSize);
-		}
-		else {
-			cout << "Command not valid" << endl;
-		}
-	}
-	cout << "RBTree final state : " << endl;
-	print(*mRBTreeTested,mStackSize);
-	ifs.close();
+void RBTreeTesting::print_current_state() {
+	print(*mRBTreeTested, mStackSize);
 }
 
 void RBTreeTesting::perform_insert(int val)

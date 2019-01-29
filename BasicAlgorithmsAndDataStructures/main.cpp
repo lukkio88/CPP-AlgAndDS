@@ -6,7 +6,8 @@
 int main(int argc, char ** argv) {
 	//system("dir");
 	//ListTesting test("list_testing_program.txt");
-	BinarySearchTreeTesting test("list_testing_program.txt", 100);
+	//BinarySearchTreeTesting test("list_testing_program.txt", 100);
+	RBTreeTesting test("list_testing_program.txt", 100);
 	test.runTest();
 	return 0;
 }

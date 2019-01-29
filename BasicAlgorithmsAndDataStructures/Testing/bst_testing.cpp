@@ -32,7 +32,7 @@ void print(const BinarySearchTree& l, const int stack_size) {
 	std::cout << "}" << std::endl;
 }
 
-BinarySearchTreeTesting::BinarySearchTreeTesting(string test_filename, const int stack_size) :mStackSize(stack_size), filename(test_filename), mTreeTested(new BinarySearchTree())
+BinarySearchTreeTesting::BinarySearchTreeTesting(const string filename, const int stack_size): UnitTest(filename),mStackSize(stack_size),mTreeTested(new BinarySearchTree())
 {
 
 }
@@ -42,37 +42,8 @@ BinarySearchTreeTesting::~BinarySearchTreeTesting()
 	delete mTreeTested;
 }
 
-void BinarySearchTreeTesting::runTest()
-{
-	string curr_line, command;
-	stringstream ss;
-	int val;
-	ifstream ifs(filename);
-	while (getline(ifs, curr_line)) {
-		ss = stringstream(curr_line);
-		ss >> command;
-
-		if (command == "insert") {
-			ss >> val;
-			perform_insert(val);
-			print(*mTreeTested, mStackSize);
-		}
-		else if (command == "remove") {
-			perform_remove();
-			print(*mTreeTested, mStackSize);
-		}
-		else if (command == "search") {
-			ss >> val;
-			perform_search(val);
-			print(*mTreeTested, mStackSize);
-		}
-		else {
-			cout << "Command not valid" << endl;
-		}
-	}
-	cout << "Tree final state : " << endl;
+void BinarySearchTreeTesting::print_current_state() {
 	print(*mTreeTested, mStackSize);
-	ifs.close();
 }
 
 void BinarySearchTreeTesting::perform_insert(int val)

@@ -3,8 +3,8 @@ project(Testing)
 set(CMAKE_CXX_STANDARD 11)
 
 set(INCLUDE_FOLDERS ./ ../ElementaryDataStructures)
-set(HEADER_FILES list_testing.h bst_testing.h rb_tree_testing.h)
-set(SRC_FILES list_testing.cpp bst_testing.cpp rb_tree_testing.cpp)
+set(HEADER_FILES unit_test.h list_testing.h bst_testing.h rb_tree_testing.h)
+set(SRC_FILES unit_test.cpp list_testing.cpp bst_testing.cpp rb_tree_testing.cpp)
 include_directories(${INCLUDE_FOLDERS})
 
 if(WIN32)
