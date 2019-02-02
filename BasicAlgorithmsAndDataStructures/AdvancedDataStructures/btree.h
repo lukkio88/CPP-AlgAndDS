@@ -19,9 +19,9 @@ struct BTreeNode {
 
 	//deletion helpers
 	int findKey(const int & k);
-	bool remove(const int & k);
+	bool remove(const int k);
 	void removeFromLeaf(const int & kIdx);
-	void removeFromInternal(const int & kIdx);
+	BTreeNode<B>* removeFromInternal(const int & kIdx, int & kUpdated);
 	BTreeNode<B> * findPrev(const int & kIdx, int & idxPrev);
 	BTreeNode<B> * findSucc(const int & kIdx, int & idxNext);
 	void borrowFromLeft(const int & childIdx);

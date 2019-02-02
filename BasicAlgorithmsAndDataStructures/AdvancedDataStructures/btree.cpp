@@ -32,23 +32,27 @@ void BTreeNode<B>::splitChild(const int & childIdx) {
 
 template<int B>
 void BTreeNode<B>::insertNonFull(const int & newKey) {
-	int i = 0;
-	while (newKey >= key[i] && i < x->n)
-		++i;
-
-	if (leaf) {
-		for (auto j = x->n; j >= i + 1; --j)
-			key[j] = key[j - 1];
-		key[i] = newKey;
-		return;
-	}
-
-	if (child[i]->n == 2*B - 1) {
-		splitChild(i);
-		if (newKey >= key[i])
+	int i;
+	BTreeNode<B> * x = this;
+	bool leaf_reached = false;
+	while (!leaf_reached) {
+		i = 0;
+		while (newKey >= key[i] && i < x->n)
 			++i;
+		if (x->leaf) {
+			for (auto j = x->n; j >= i + 1; --j)
+				x->key[j] = x->key[j - 1];
+			x->key[i] = newKey;
+			return;
+		}
+
+		if (x->child[i]->n == 2 * B - 1) {
+			x->splitChild(i);
+			if (newKey >= x->key[i])
+				++i;
+		}
+		x = x->child[i];
 	}
-	insertNonFull(child[i]);
 }
 
 template<int B>
@@ -90,7 +94,7 @@ void BTreeNode<B>::borrowFromLeft(const int & childIdx) {
 	BTreeNode<B> * xci = child[childIdx];
 	BTreeNode<B> * xc1m1 = child[childIdx - 1];
 
-	for (auto i = xci->n; i >= 0 ; --i)
+	for (auto i = xci->n; i >= 0; --i)
 		xci->child[i + 1] = xci->child[i];
 	for (auto i = xci->n - 1; i >= 0; --i)
 		xci->key[i + 1] = xci->key[i];
@@ -108,7 +112,7 @@ void BTreeNode<B>::borrowFromRight(const int & childIdx) {
 	BTreeNode<B> * xc1p1 = child[childIdx + 1];
 
 	xci->key[xci->n] = key[childIdx];
-	xci->child[xci->n+1] = xc1p1->child[0];
+	xci->child[xci->n + 1] = xc1p1->child[0];
 	key[childIdx] = xcip1->key[0];
 
 	for (auto i = 0; i < xcp1->n - 1; ++i)
@@ -124,7 +128,7 @@ template<int B>
 void BTreeNode<B>::merge(const int & childIdx) { //this only happens if both have B - 1 keys
 	BTreeNode<B> * xci = child[childIdx];
 	BTreeNode<B> * xcim1 = child[childIdx - 1];
-	
+
 	xcim1->key[B - 1] = key[childIdx];
 	for (auto i = 0; i < B - 1; ++i)
 		xcim1->key[B + i] = xci->key[i];
@@ -142,19 +146,25 @@ void BTreeNode<B>::merge(const int & childIdx) { //this only happens if both hav
 }
 
 template<int B>
-bool BTreeNode<B>::remove(const int & k) {
+bool BTreeNode<B>::remove(const int k) {
 	int idx = findKey(k);
-	if (idx < n && key[idx] == k) {
-		if (leaf)
-			removeFromLeaf(idx);
-		else
-			removeFromInternal(idx);
-	}
-	else {
-		if (leaf) {
-			return false; //Error, key not in the tree
+	BTreeNode<B> * x;
+	bool deleted = false;
+	while (!deleted) {
+		if (idx < x->n && x->key[idx] == k) {
+			if (leaf) {
+				x->removeFromLeaf(idx);
+				deleted = true;
+			}
+			else
+				x = removeFromInternal(k, idx);
 		}
-		child[idx]->remove(k);
+		else {
+			if (leaf) {
+				return false; //Error, key not in the tree
+			}
+			x = child[idx];
+		}
 	}
 }
 
@@ -166,23 +176,26 @@ void BTreeNode<B>::removeFromLeaf(const int & kIdx) {
 }
 
 template<int B>
-void BTreeNode<B>::removeFromInternal(const int & kIdx) {
+BTreeNode<B>* BTreeNode<B>::removeFromInternal(const int & kIdx, int & kUpdated) {
 	const int & ki = key[kIdx];
 	int kj;
 	BTreeNode<B> * u;
 	if (child[kIdx]->n >= B) {
 		u = findPrev(kIdx, kj);
 		kj = u->key[kj];
-		child[kIdx]->remove(kj);
+		kUpdated = kj;
+		return child[kIdx];
 	}
 	else if (child[kIdx + 1]->n >= B) {
 		u = findNext(ki, kj);
 		kj = u->key[kj];
-		child[kIdx]->remove(kj);
+		kUpdated = kj;
+		return child[kIdx];
 	}
 	else {
 		merge(kIdx + 1);
-		child[kIdx]->remove(ki);
+		kUpdated = ki;
+		return child[kIdx];
 	}
 }
 
