@@ -5,8 +5,8 @@ set( CMAKE_CXX_STANDARD 11 )
 
 include_directories(./)
 
-set( HEADER_FILES list.h bstree.h rbtree.h)
-set( SRC_FILES list.cpp bstree.cpp rbtree.cpp)
+set( HEADER_FILES list.h bstree.h rbtree.h allocator.h)
+set( SRC_FILES list.cpp bstree.cpp rbtree.cpp allocator.cpp)
 
 if(WIN32)
 	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
