@@ -19,6 +19,7 @@ public:
 		mMemory = new T[mMaxSize];
 		mFlag = new bool[mMaxSize];
 		currentSize = 0;
+		top = 0;
 	}
 
 	~Allocator()
@@ -33,7 +34,7 @@ public:
 	*/
 	T* allocate()
 	{
-		T* block = mMemory[top];
+		T* block = &mMemory[top];
 		mFlag[top++] = true;
 		++currentSize;
 		if (currentSize == mMaxSize/2)
@@ -48,6 +49,7 @@ public:
 		{
 			defragment();
 		}
+		return block;
 	}
 
 	/**

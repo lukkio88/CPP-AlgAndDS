@@ -11,6 +11,8 @@ struct Node {
 template<typename Data>
 class ListAllocator : public Allocator<Node<Data>>
 {
+public:
+	ListAllocator(int maxSize) :Allocator<Node<Data>>(maxSize) { ; }
 protected:
 	void moveContentDefragment(Node<Data>* source, Node<Data>* destination) override
 	{
@@ -30,8 +32,8 @@ protected:
 
 		int prevOffset = source->prev - memorySource;
 		int nextOffset = source->next - memorySource;
-		destination->prev = memoryDestination + prevIndex;
-		destination->next = memoryDestination + nextIndex;
+		destination->prev = memoryDestination + prevOffset;
+		destination->next = memoryDestination + nextOffset;
 	}
 };
 
@@ -45,7 +47,8 @@ public:
 	ListInterface(Node<T>* sentinel)
 	{
 		nil = sentinel;
-		nil->next = nil->prev = nil;
+		nil->next = nil;
+		nil->prev = nil;
 	}
 	void insertFront(Node<T>* x)
 	{
@@ -66,7 +69,7 @@ public:
 		x->next->prev = x->prev;
 		x->prev->next = x->next;
 	}
-	Node* search(const T& key)
+	Node<T>* search(const T& key)
 	{
 		Node<T>* current = nil->next;
 		while (current != nil)
@@ -87,13 +90,12 @@ public:
 template<typename T>
 class List {
 public:
-	List():allocator(10),interface(allocator->allocate())
+	List():allocator(10), interface(allocator.allocate())
 	{
-
 	}
 	void append(const T& key)
 	{
-		Node<T>* node = allocate();
+		Node<T>* node = allocator.allocate();
 		node->key = key;
 		interface.insertFront(node);
 	}
@@ -120,34 +122,47 @@ public:
 		}
 	}
 
-	Iterator begin() {
-		return Iterator(interface.nil->next);
-	}
-
-	Iterator end() {
-		return Iterator(interface.nil);
-	}
-
-	class Iterator
+	struct Iterator
 	{
-	public:
-		Iterator(const Node<T>* current) :mCurrent(current) { ; }
 		Iterator operator++()
 		{
-			return Iterator(mCurrent->next);
+			Node<T>* current = mCurrent;
+			mCurrent = mCurrent->next;
+			return Iterator{ current };
 		}
 		Iterator& operator++(int)
 		{
 			mCurrent = mCurrent->next;
 			return *this;
 		}
-	private:
+		bool operator==(const Iterator& it) const
+		{
+			return mCurrent == it.mCurrent;
+		}
+
+		bool operator!=(const Iterator& it) const
+		{
+			return !(*this == it);
+		}
+
+		T& operator*() {
+			return mCurrent->key;
+		}
+
 		Node<T>* mCurrent;
 	};
 
+	Iterator begin() {
+		return Iterator{ interface.nil->next };
+	}
+
+	Iterator end() {
+		return Iterator{ interface.nil };
+	}
+
 private:
-	ListInterface interface;
-	Allocator<T> allocator;
+	ListAllocator<T> allocator;
+	ListInterface<T> interface;
 };
 
 #endif
