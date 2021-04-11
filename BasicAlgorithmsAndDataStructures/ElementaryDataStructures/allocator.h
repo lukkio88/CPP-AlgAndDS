@@ -34,14 +34,17 @@ public:
 	T* allocate()
 	{
 		T* block = mMemory[top];
-		mFlag[++top] = true; //denoting node being used
+		mFlag[top++] = true;
 		++currentSize;
-		if (currentSize == mMaxSize / 2)
+		if (currentSize == mMaxSize/2)
 		{
+			//Notice that "top" in this case will have value mMaxSize / 2
 			defragment();
 			reallocate(2 * mMaxSize);
 		}
-		if (4 * currentSize < top)
+
+		//Notice that if 
+		if (top == (5*currentSize)/3) //Observe that since currentSize < mMaxSize/2 we have top < mMaxSize
 		{
 			defragment();
 		}
@@ -60,7 +63,7 @@ public:
 			defragment();
 			reallocate(mMaxSize / 2);
 		}
-		if (4 * currentSize < top)
+		if (top == (5*currentSize)/2)
 		{
 			defragment();
 		}

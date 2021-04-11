@@ -119,6 +119,32 @@ public:
 			allocator.deallocate(nil->prev);
 		}
 	}
+
+	Iterator begin() {
+		return Iterator(interface.nil->next);
+	}
+
+	Iterator end() {
+		return Iterator(interface.nil);
+	}
+
+	class Iterator
+	{
+	public:
+		Iterator(const Node<T>* current) :mCurrent(current) { ; }
+		Iterator operator++()
+		{
+			return Iterator(mCurrent->next);
+		}
+		Iterator& operator++(int)
+		{
+			mCurrent = mCurrent->next;
+			return *this;
+		}
+	private:
+		Node<T>* mCurrent;
+	};
+
 private:
 	ListInterface interface;
 	Allocator<T> allocator;
