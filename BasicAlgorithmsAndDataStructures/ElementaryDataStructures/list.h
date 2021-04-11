@@ -44,12 +44,22 @@ protected:
 template<typename T>
 class ListInterface {
 public:
+	/**
+	 * @brief Create interface with default sentinel
+	 * @param sentinel initial node to be used as sentinel
+	 * @return 
+	*/
 	ListInterface(Node<T>* sentinel)
 	{
 		nil = sentinel;
 		nil->next = nil;
 		nil->prev = nil;
 	}
+
+	/**
+	 * @brief Insert new node at the front
+	 * @param x Node to be inserted
+	*/
 	void insertFront(Node<T>* x)
 	{
 		x->prev = nil;
@@ -57,6 +67,11 @@ public:
 		nil->next->prev = x;
 		nil->next = x;
 	}
+
+	/**
+	 * @brief Insert new node at the back
+	 * @param x Node to be inserted
+	*/
 	void insertBack(Node<T>* x)
 	{
 		x->prev = nil->prev;
@@ -64,11 +79,22 @@ public:
 		nil->prev->next = x;
 		nil->prev = x;
 	}
+
+	/**
+	 * @brief Remove node
+	 * @param x Node to be removed
+	*/
 	void remove(Node<T>* x)
 	{
 		x->next->prev = x->prev;
 		x->prev->next = x->next;
 	}
+
+	/**
+	 * @brief Search for node with given key
+	 * @param key 
+	 * @return 
+	*/
 	Node<T>* search(const T& key)
 	{
 		Node<T>* current = nil->next;
@@ -78,6 +104,15 @@ public:
 				return current;
 			current = current->next;
 		}
+	}
+
+	/**
+	 * @brief Re-set the sentinel node
+	 * @param sentinel 
+	*/
+	void setNil(Node<T>* sentinel)
+	{
+		nil = sentinel;
 	}
 public:
 	Node<T> *nil;
@@ -90,35 +125,61 @@ public:
 template<typename T>
 class List {
 public:
+	/**
+	 * @brief Create empty list
+	 * @tparam T 
+	*/
 	List():allocator(10), interface(allocator.allocate())
 	{
 	}
+
+	/**
+	 * @brief Append key
+	 * @tparam T key
+	*/
 	void append(const T& key)
 	{
 		Node<T>* node = allocator.allocate();
 		node->key = key;
+		interface.setNil(allocator.getBaseOffset());
 		interface.insertFront(node);
 	}
+
+	/**
+	 * @brief Prepend key
+	 * @param key 
+	*/
 	void preprend(const T& key)
 	{
 		Node<T>* node = allocate();
 		node->key = key;
+		interface.setNil(allocator.getBaseOffset());
 		interface.insertBack(node);
 	}
+
+	/**
+	 * @brief Remove front node
+	*/
 	void popFront()
 	{
 		if (nil->next != nil) 
 		{
 			interface.remove(nil->next);
 			allocator.deallocate(nil->next);
+			interface.setNil(allocator.getBaseOffset());
 		}
 	}
+
+	/**
+	 * @brief Remove back node
+	*/
 	void popBack()
 	{
 		if (nil->prev != nil)
 		{
 			interface.remove(nil->prev);
 			allocator.deallocate(nil->prev);
+			interface.setNil(allocator.getBaseOffset());
 		}
 	}
 

@@ -40,14 +40,14 @@ public:
 		if (currentSize == mMaxSize/2)
 		{
 			//Notice that "top" in this case will have value mMaxSize / 2
-			defragment();
+			//defragment();
 			reallocate(2 * mMaxSize);
 		}
 
 		//Notice that if 
 		if (top == (5*currentSize)/3) //Observe that since currentSize < mMaxSize/2 we have top < mMaxSize
 		{
-			defragment();
+			//defragment();
 		}
 		return block;
 	}
@@ -124,6 +124,16 @@ public:
 		top = reallocatedTop;
 		currentSize = reallocatedCurrentSize;
 	}
+
+	/**
+	 * @brief Get base offset of the memory pool
+	 * @return base offset
+	*/
+	T* getBaseOffset()
+	{
+		return mMemory;
+	}
+
 protected:
 	/**
 	 * @brief Copy function for defragment
